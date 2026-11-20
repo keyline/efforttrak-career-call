@@ -1,0 +1,17 @@
+**/.env
+**/.env.*
+!**/.env.example
+/backend/vendor/
+/backend/node_modules/
+/backend/database/*.sqlite
+/backend/storage/logs/*
+/backend/storage/framework/cache/*
+/backend/storage/framework/sessions/*
+/backend/storage/framework/views/*
+/ai-service/.venv/
+**/__pycache__/
+**/.pytest_cache/
+/.tmp/
+/.plugins/
+/.agents/skills/
+*.zip

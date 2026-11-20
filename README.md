@@ -4,6 +4,14 @@ This repository is being prepared as a standalone Laravel API plus a Python Fast
 
 Implemented submodules, their files, and database changes are recorded in [DEVELOPMENT_LOG.md](DEVELOPMENT_LOG.md).
 
+## Production secrets
+
+The Git repository includes production templates in `deploy/env/`. On the server, copy `deploy/env/backend.env.example` to `backend/.env` and `deploy/env/ai-service.env.example` to `ai-service/.env`, then fill the blanks there. Never commit either live file, paste keys into GitHub issues, or expose them through browser code. Limit file access to the service account and administrator. Use a server secret manager if available; GitHub Actions secrets are for deployment jobs, not a substitute for runtime secret storage.
+
+Set `APP_ENV=production`, `APP_DEBUG=false`, production database and public HTTPS/WSS URLs in `backend/.env`. Generate a unique Laravel `APP_KEY` on the server with `php artisan key:generate`. Set the OpenAI key in both services where required, Vobiz credentials in the backend, ElevenLabs credentials in the voice service, and the same random `VOBIZ_BRIDGE_TOKEN` in both services. Keep the career API, callback, Vobiz callback, and operations tokens separate. Run `php artisan config:cache` after changing backend settings and restart the API, queue worker, scheduler, and voice service after secret changes.
+
+Before each first push, review `git status --short`, `git diff --cached --name-only`, and `git check-ignore -v backend/.env ai-service/.env`. Enable GitHub secret scanning and push protection on the repository. If a key was ever shared or committed, revoke it at its provider and issue a new one; removing it from the latest commit does not make the old key safe.
+
 ## Local development setup
 
 Requirements: PHP 8.3+, Composer 2, Python 3.13, and MySQL for integration testing. The Laravel scaffold also supports SQLite for local smoke tests.
