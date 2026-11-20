@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/keylines/public_html/effortrakaicall.keylines.net/
+    - /bin/mkdir -p "$DEPLOYPATH"
+    - /bin/cp -R index.html css js assets "$DEPLOYPATH"
